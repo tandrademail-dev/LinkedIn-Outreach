@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Outreach LinkedIn</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f2f4f6;--card:#fff;--ink:#17212b;--mut:#66727f;--line:#dde2e7;--acc:#0e6a8a;--accs:#dcedf3;--ok:#2f8a57;--warn:#d98e1f;--bad:#c2483a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10161c;--card:#18212a;--ink:#e8edf1;--mut:#93a1ae;--line:#2a3541;--acc:#4db6d6;--accs:#173340}}
+:root[data-theme="dark"]{--bg:#10161c;--card:#18212a;--ink:#e8edf1;--mut:#93a1ae;--line:#2a3541;--acc:#4db6d6;--accs:#173340}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Manrope,system-ui,sans-serif}
+header{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+h1{font-size:20px;font-weight:800;margin:14px 0 8px}
+nav{display:flex;gap:4px;overflow-x:auto}
+nav button{border:0;background:none;color:var(--mut);font:600 15px Manrope,sans-serif;padding:10px 14px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--acc);border-color:var(--acc)}
+main{padding:20px 16px 60px}
+section{display:none}section.on{display:block}
+h2{font-size:18px;margin:0 0 12px;font-weight:800}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.bar .sp{flex:1}
+input,select,textarea,button{font:inherit;color:var(--ink)}
+input,select,textarea{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+.bar input,.bar select{width:auto}
+textarea{min-height:110px;resize:vertical}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer}
+.btn.ghost{background:none;color:var(--acc);border:1px solid var(--acc)}
+.btn.del{background:none;color:var(--bad);border:1px solid var(--bad)}
+.plus{width:40px;height:40px;border-radius:50%;font-size:24px;line-height:1;padding:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
+.lead{cursor:pointer}.lead:hover{border-color:var(--acc)}
+.lead b{display:block}.lead small,.mut{color:var(--mut)}
+.chip{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:600;background:var(--accs);color:var(--acc)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row .sp{flex:1;min-width:160px}
+.stbtn{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.stbtn button{border:1px solid var(--line);background:none;border-radius:99px;padding:3px 12px;font-size:13px;cursor:pointer}
+.stbtn button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.f2{grid-template-columns:1fr}}
+label{display:block;font-size:13px;font-weight:600;color:var(--mut);margin-bottom:3px}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);width:min(560px,94vw);padding:18px}
+dialog::backdrop{background:#0008}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.kpis div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.kpis b{font-size:24px;display:block}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px}
+.charts .card{height:300px}
+.charts canvas{max-height:240px}
+.an li{margin-bottom:8px}
+pre{white-space:pre-wrap;font:inherit;margin:0}
+.empty{color:var(--mut);padding:18px;text-align:center;border:1px dashed var(--line);border-radius:10px}
+.sc{overflow-x:auto}
+.bn{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.bn:empty{display:none}
+.bn button{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px;font-size:13px;cursor:pointer}
+.bn .bad{border-color:var(--bad);color:var(--bad)}.bn .warn{border-color:var(--warn);color:var(--warn)}
+.bdg{background:var(--bad);color:#fff;border-radius:99px;font-size:11px;padding:0 6px;margin-left:6px}
+.prog{height:14px;background:var(--line);border-radius:99px;overflow:hidden}.prog i{display:block;height:100%;background:var(--acc)}
+.al{border-left:4px solid var(--warn);cursor:pointer}.al.bad{border-left-color:var(--bad)}.al.ok{border-left-color:var(--ok)}
+.late{color:var(--bad);font-weight:600}
+.chk{max-height:240px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:6px}
+.chk label{display:flex;gap:8px;align-items:center;color:var(--ink);font-weight:400;font-size:14px;margin:0;padding:3px}.chk input{width:auto}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Outreach LinkedIn</h1>
+<nav id="nav"><button data-t="leads" class="on">Leads</button><button data-t="outreach">Outreach</button><button data-t="estado">Estado</button><button data-t="follow">Follow-ups</button><button data-t="ritmo">Ritmo</button><button data-t="report">Report</button></nav></div></header>
+<main class="wrap">
+<div class="bn" id="banner"></div>
+
+<section id="leads" class="on">
+<div class="bar"><h2 style="margin:0">Leads</h2><input id="q" placeholder="Pesquisar…"><select id="ff"></select><span class="sp"></span><button class="btn plus" data-act="newlead" title="Adicionar lead">+</button></div>
+<div id="leadlist" class="grid"></div>
+</section>
+
+<section id="outreach">
+<div class="bar"><h2 style="margin:0">Exemplos de outreach</h2><span class="sp"></span><button class="btn" data-act="newtpl">+ Exemplo</button></div>
+<div id="tpls" class="grid"></div>
+<h2 style="margin:26px 0 12px">Por enviar</h2>
+<div id="pend"></div>
+<h2 style="margin-top:26px">Registar outreach</h2>
+<div class="card">
+<div class="f2"><div><label>Lead</label><select id="o_lead"></select></div>
+<div><label>Tipo</label><select id="o_tipo"></select></div>
+<div><label>Data</label><input type="date" id="o_data"></div>
+<div><label>Estado inicial</label><select id="o_est"><option>Por enviar</option><option>Enviado</option></select></div>
+<div><label>Follow-up em (opcional)</label><input type="date" id="o_fu"></div></div>
+<div style="margin:10px 0"><label>Mensagem (texto exato que enviaste ou vais enviar)</label><textarea id="o_txt"></textarea></div>
+<button class="btn" data-act="addout">Guardar outreach</button> <span id="o_msg" class="mut"></span>
+</div>
+<h2 style="margin-top:26px">Histórico</h2>
+<div id="outlog"></div>
+</section>
+
+<section id="estado">
+<div class="bar"><h2 style="margin:0">Estado</h2><select id="es_f"></select></div>
+<div id="eslist"></div>
+</section>
+
+<section id="follow">
+<h2>Follow-ups</h2>
+<div class="kpis" id="fukpi"></div>
+<div id="fulist"></div>
+</section>
+
+<section id="ritmo">
+<h2>Ritmo semanal</h2>
+<div class="card"><div class="row"><label style="margin:0">Quota semanal de contactos novos</label><input type="number" id="quota" min="1" style="width:90px"><span class="mut">Os follow-ups não contam para a quota.</span></div></div>
+<div class="card" id="rprog"></div>
+<div class="card" style="height:300px"><canvas id="c5" style="max-height:250px"></canvas></div>
+<h2 style="margin-top:22px">Alertas e lembretes</h2>
+<div id="alist"></div>
+</section>
+
+<section id="report">
+<h2>Report geral</h2>
+<div class="kpis" id="kpis"></div>
+<div class="charts">
+<div class="card"><canvas id="c1"></canvas></div><div class="card"><canvas id="c2"></canvas></div>
+<div class="card"><canvas id="c3"></canvas></div><div class="card"><canvas id="c4"></canvas></div></div>
+<h2 style="margin-top:24px">O que mudar nas mensagens</h2>
+<div class="card an"><ul id="an" style="margin:0;padding-left:18px"></ul></div>
+<div class="card"><div class="row"><span class="sp mut">Análise mais profunda do texto, feita pelo Claude com os teus dados.</span><button class="btn ghost" id="aibtn" data-act="ai">Analisar com Claude</button></div><pre id="ai" style="margin-top:10px"></pre></div>
+</section>
+</main>
+
+<dialog id="dl">
+<div class="f2">
+<div><label>Nome</label><input id="l_nome"></div><div><label>Empresa</label><input id="l_emp"></div>
+<div><label>Cargo</label><input id="l_cargo"></div><div><label>Fase</label><select id="l_fase"></select></div>
+<div><label>Link do LinkedIn</label><input id="l_li"></div><div><label>Email / telefone</label><input id="l_ct"></div>
+<div><label>Nicho / setor</label><input id="l_nicho"></div><div><label>Origem</label><input id="l_orig" placeholder="ex.: contacto existente"></div></div>
+<div style="margin:10px 0"><label>Notas (contexto, dores, o que já falaram)</label><textarea id="l_notas"></textarea></div>
+<div class="row"><button class="btn" data-act="savelead">Guardar</button><button class="btn ghost" data-act="closedl">Cancelar</button><span class="sp"></span><button class="btn del" id="l_del" data-act="dellead">Apagar</button></div>
+</dialog>
+
+<dialog id="dt">
+<div><label>Nome do exemplo</label><input id="t_nome" placeholder="ex.: Apresentação inicial"></div>
+<div style="margin:10px 0"><label>Tipo</label><select id="t_tipo"></select></div>
+<div><label>Texto (usa {nome} e {empresa} para personalizar)</label><textarea id="t_txt"></textarea></div>
+<div class="row" style="margin-top:12px"><button class="btn" data-act="savetpl">Guardar</button><button class="btn ghost" data-act="closetpl">Cancelar</button><span class="sp"></span><button class="btn del" id="t_del" data-act="deltpl">Apagar</button></div>
+</dialog>
+
+<dialog id="du">
+<h2 id="du_t" style="margin-bottom:6px"></h2>
+<div class="mut" style="margin-bottom:8px">Escolhe as leads. Cada uma recebe um outreach "Por enviar" com o texto personalizado.</div>
+<div class="chk" id="du_list"></div>
+<div class="row" style="margin-top:12px"><button class="btn" data-act="mkout">Criar outreachs</button><button class="btn ghost" data-act="selall">Selecionar todas</button><button class="btn ghost" data-act="closeuse">Cancelar</button></div>
+</dialog>
+
+<script>
+const ESTADOS=["Por enviar","Enviado","Respondido","Reunião marcada","Sem resposta"];
+const FASES=["Nova","Contactada","Em conversa","Reunião","Cliente","Perdida"];
+const TIPOS=["Pedido de ligação","Mensagem de apresentação","Follow-up","Resposta a post","InMail"];
+const $=s=>document.querySelector(s), uid=()=>Math.random().toString(36).slice(2,9), today=()=>new Date().toISOString().slice(0,10);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm=d=>({leads:d.leads||[],outreach:d.outreach||[],templates:d.templates||[],cfg:d.cfg||{quota:25}});
+let S=norm({}), ref=null, timer=null, editId=null, tplId=null, useTpl=null, pfu=null, rc=null, charts=[], tab="leads";
+try{const t=localStorage.getItem("lv_crm");if(t)S=norm(JSON.parse(t))}catch(e){}
+const L=id=>S.leads.find(l=>l.id===id)||{nome:"(lead removida)",empresa:""};
+const opts=(a,sel)=>a.map(x=>`<option${x===sel?" selected":""}>${esc(x)}</option>`).join("");
+const sent=o=>o.estado!=="Por enviar", replied=o=>o.estado==="Respondido"||o.estado==="Reunião marcada";
+
+function save(){
+  try{localStorage.setItem("lv_crm",JSON.stringify(S))}catch(e){}
+  if(ref){clearTimeout(timer);timer=setTimeout(()=>{timer=null;ref.set(S).catch(()=>{})},400)}
+}
+(async()=>{
+  try{
+    if(typeof claude==="undefined")return;
+    const db=await claude.use("db"); if(!db)return;
+    ref=db.doc("crm/state");
+    ref.onSnapshot(s=>{
+      if(timer)return;
+      if(s.exists){S=norm(s.data());renderAll()}
+      else if(S.leads.length||S.outreach.length){ref.set(S).catch(()=>{})}
+    },()=>{});
+  }catch(e){}
+})();
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-t],[data-act]"); if(!t)return;
+  if(t.dataset.t){go(t.dataset.t);return}
+  const a=t.dataset.act,id=t.dataset.id;
+  if(a==="newlead")openLead(null);
+  else if(a==="editlead")openLead(id);
+  else if(a==="closedl")$("#dl").close();
+  else if(a==="savelead"){
+    const nome=$("#l_nome").value.trim(); if(!nome){$("#l_nome").focus();return}
+    const d={nome,empresa:$("#l_emp").value.trim(),cargo:$("#l_cargo").value.trim(),fase:$("#l_fase").value,linkedin:$("#l_li").value.trim(),contacto:$("#l_ct").value.trim(),nicho:$("#l_nicho").value.trim(),origem:$("#l_orig").value.trim(),notas:$("#l_notas").value.trim()};
+    if(editId)Object.assign(L(editId),d);else S.leads.push({id:uid(),criada:today(),...d});
+    save();$("#dl").close();renderAll();
+  }
+  else if(a==="dellead"){if(confirm("Apagar esta lead e os seus outreachs?")){S.leads=S.leads.filter(l=>l.id!==editId);S.outreach=S.outreach.filter(o=>o.leadId!==editId);save();$("#dl").close();renderAll()}}
+  else if(a==="addout"){
+    const leadId=$("#o_lead").value,texto=$("#o_txt").value.trim();
+    if(!leadId){$("#o_msg").textContent="Adiciona primeiro uma lead.";return}
+    const estado=$("#o_est").value;
+    const data=$("#o_data").value||today();let fu=$("#o_fu").value;if(estado==="Enviado"&&!fu)fu=addDays(data,5);
+    S.outreach.push({id:uid(),leadId,tipo:$("#o_tipo").value,data,texto,estado,estadoData:today(),sentDate:estado==="Enviado"?data:"",followup:fu});
+    $("#o_fu").value="";if(pfu){const p=S.outreach.find(x=>x.id===pfu);if(p)p.fuDone=true;pfu=null}
+    if(estado==="Enviado"&&L(leadId).fase==="Nova")L(leadId).fase="Contactada";
+    $("#o_txt").value="";$("#o_msg").textContent="Guardado.";save();renderAll();
+  }
+  else if(a==="delout"){if(confirm("Apagar este outreach?")){S.outreach=S.outreach.filter(o=>o.id!==id);save();renderAll()}}
+  else if(a==="est"){
+    const o=S.outreach.find(x=>x.id===id),was=o.estado; o.estado=t.dataset.v; o.estadoData=today(); if(o.estado==="Enviado"&&was!=="Enviado"){o.sentDate=today();if(!o.followup)o.followup=addDays(today(),5)}
+    const l=S.leads.find(x=>x.id===o.leadId);
+    if(l){if(o.estado==="Enviado"&&l.fase==="Nova")l.fase="Contactada";if(o.estado==="Respondido"&&["Nova","Contactada"].includes(l.fase))l.fase="Em conversa";if(o.estado==="Reunião marcada")l.fase="Reunião"}
+    save();renderAll();
+  }
+  else if(a==="newtpl")openTpl(null);
+  else if(a==="edittpl")openTpl(id);
+  else if(a==="closetpl")$("#dt").close();
+  else if(a==="savetpl"){
+    const nome=$("#t_nome").value.trim(),texto=$("#t_txt").value.trim(); if(!nome||!texto){(nome?$("#t_txt"):$("#t_nome")).focus();return}
+    const d={nome,tipo:$("#t_tipo").value,texto};
+    if(tplId)Object.assign(S.templates.find(x=>x.id===tplId),d);else S.templates.push({id:uid(),...d});
+    save();$("#dt").close();renderAll();
+  }
+  else if(a==="deltpl"){if(confirm("Apagar este exemplo?")){S.templates=S.templates.filter(x=>x.id!==tplId);save();$("#dt").close();renderAll()}}
+  else if(a==="usetpl"){
+    useTpl=id;$("#du_t").textContent=S.templates.find(x=>x.id===id).nome;
+    $("#du_list").innerHTML=S.leads.map(l=>`<label><input type="checkbox" value="${l.id}">${esc(l.nome)}${l.empresa?" — "+esc(l.empresa):""}</label>`).join("")||'<div class="mut">Ainda não tens leads.</div>';
+    $("#du").showModal();
+  }
+  else if(a==="selall"){const c=[...document.querySelectorAll("#du_list input")];const all=c.every(i=>i.checked);c.forEach(i=>i.checked=!all)}
+  else if(a==="closeuse")$("#du").close();
+  else if(a==="mkout"){
+    const tp=S.templates.find(x=>x.id===useTpl),ids=[...document.querySelectorAll("#du_list input:checked")].map(i=>i.value); if(!tp||!ids.length)return;
+    ids.forEach(lid=>S.outreach.push({id:uid(),leadId:lid,tipo:tp.tipo,data:today(),texto:fillT(tp.texto,L(lid)),estado:"Por enviar",estadoData:today(),sentDate:"",followup:""}));
+    save();$("#du").close();renderAll();
+  }
+  else if(a==="filltpl"){
+    const tp=S.templates.find(x=>x.id===id),l=S.leads.find(x=>x.id===$("#o_lead").value)||{};
+    $("#o_tipo").value=tp.tipo;$("#o_txt").value=fillT(tp.texto,l);$("#o_msg").textContent="Exemplo aplicado. Confirma a lead antes de guardar.";
+    $("#o_txt").scrollIntoView({behavior:"smooth",block:"center"});
+  }
+  else if(a==="fu_new"){
+    const o=S.outreach.find(x=>x.id===id);pfu=id;go("outreach");
+    $("#o_lead").value=o.leadId;$("#o_tipo").value="Follow-up";$("#o_est").value="Por enviar";$("#o_msg").textContent="Escreve o follow-up e guarda.";$("#o_txt").focus();
+  }
+  else if(a==="ai")runAI();
+});
+document.addEventListener("change",e=>{
+  const t=e.target;
+  if(t.dataset.fase){L(t.dataset.fase).fase=t.value;save();renderAll()}
+  else if(t.dataset.fu){S.outreach.find(o=>o.id===t.dataset.fu).followup=t.value;save();renderAll()}
+  else if(t.id==="quota"){S.cfg.quota=Math.max(1,Math.round(+t.value)||25);save();renderAll()}
+});
+["q","ff","es_f"].forEach(i=>$("#"+i).addEventListener("input",renderAll));
+
+function openLead(id){
+  editId=id;const l=id?L(id):{};
+  $("#l_nome").value=l.nome||"";$("#l_emp").value=l.empresa||"";$("#l_cargo").value=l.cargo||"";$("#l_li").value=l.linkedin||"";$("#l_ct").value=l.contacto||"";
+  $("#l_nicho").value=l.nicho||"";$("#l_orig").value=l.origem||"";$("#l_notas").value=l.notas||"";$("#l_fase").innerHTML=opts(FASES,l.fase||"Nova");
+  $("#l_del").style.display=id?"":"none";$("#dl").showModal();
+}
+
+function renderLeads(){
+  const q=$("#q").value.toLowerCase(),f=$("#ff").value;
+  const list=S.leads.filter(l=>(f==="Todas as fases"||l.fase===f)&&(!q||[l.nome,l.empresa,l.cargo,l.nicho,l.notas].join(" ").toLowerCase().includes(q)));
+  $("#leadlist").innerHTML=list.length?list.map(l=>{
+    const n=S.outreach.filter(o=>o.leadId===l.id);
+    return `<div class="card lead" data-act="editlead" data-id="${l.id}"><div class="row"><b class="sp">${esc(l.nome)}</b><span class="chip">${esc(l.fase)}</span></div>
+    <small>${esc([l.cargo,l.empresa].filter(Boolean).join(" · "))}</small>
+    ${l.nicho?`<div class="mut">${esc(l.nicho)}</div>`:""}
+    <div class="mut" style="margin-top:6px">${n.length} outreach${n.length===1?"":"s"}${l.linkedin?` · <a href="${esc(l.linkedin)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">LinkedIn</a>`:""}</div>
+    ${l.notas?`<div style="margin-top:6px;font-size:13px">${esc(l.notas.slice(0,110))}${l.notas.length>110?"…":""}</div>`:""}</div>`}).join(""):
+    `<div class="empty" style="grid-column:1/-1">${S.leads.length?"Nenhuma lead com este filtro.":"Ainda não tens leads. Carrega no + para adicionar a primeira."}</div>`;
+}
+function leadOpts(){const v=$("#o_lead").value;$("#o_lead").innerHTML=S.leads.map(l=>`<option value="${l.id}"${l.id===v?" selected":""}>${esc(l.nome)}${l.empresa?" — "+esc(l.empresa):""}</option>`).join("")}
+function outCard(o,full){
+  const l=L(o.leadId);
+  return `<div class="card"><div class="row"><b class="sp">${esc(l.nome)} <span class="mut" style="font-weight:400">${esc(l.empresa)}</span></b><span class="chip">${esc(o.tipo)}</span><span class="mut">${esc(o.data)}</span></div>
+  ${o.texto?`<div class="mut" style="margin-top:6px;font-size:14px">${esc(full?o.texto:o.texto.slice(0,160)+(o.texto.length>160?"…":""))}</div>`:""}`;
+}
+function renderOutreach(){
+  const p=S.outreach.filter(o=>o.estado==="Por enviar").sort((a,b)=>a.data.localeCompare(b.data));
+  $("#pend").innerHTML=p.length?p.map(o=>outCard(o,true)+`<div class="stbtn"><button data-act="est" data-id="${o.id}" data-v="Enviado">Marcar como enviado</button><button data-act="delout" data-id="${o.id}">Apagar</button></div></div>`).join(""):`<div class="empty">Nada por enviar. Regista abaixo os próximos outreachs.</div>`;
+  const h=[...S.outreach].sort((a,b)=>b.data.localeCompare(a.data));
+  $("#outlog").innerHTML=h.length?h.map(o=>outCard(o)+`<div class="row" style="margin-top:6px"><span class="chip">${esc(o.estado)}</span><span class="sp"></span><button class="btn del" data-act="delout" data-id="${o.id}" style="padding:2px 10px">Apagar</button></div></div>`).join(""):`<div class="empty">Sem registos ainda.</div>`;
+}
+function renderEstado(){
+  const f=$("#es_f").value;
+  const l=S.outreach.filter(o=>f==="Todos os estados"||o.estado===f).sort((a,b)=>b.data.localeCompare(a.data));
+  $("#eslist").innerHTML=l.length?l.map(o=>{const ld=L(o.leadId);
+    return outCard(o)+`<div class="row" style="margin-top:6px"><label style="margin:0">Fase da lead</label><select data-fase="${o.leadId}" style="width:auto">${opts(FASES,ld.fase)}</select><span class="mut">estado desde ${esc(o.estadoData||o.data)}</span></div>
+    <div class="stbtn">${ESTADOS.map(s=>`<button class="${s===o.estado?"on":""}" data-act="est" data-id="${o.id}" data-v="${s}">${s}</button>`).join("")}</div></div>`}).join(""):`<div class="empty">Sem outreachs neste estado.</div>`;
+}
+
+function analysis(){
+  const s=S.outreach.filter(o=>sent(o)&&o.texto), out=[];
+  if(s.length<5)return ["Regista pelo menos 5 outreachs enviados, com o texto da mensagem, para a análise ser útil. Neste momento tens "+s.length+"."];
+  const rate=a=>a.length?a.filter(replied).length/a.length:0, pc=x=>Math.round(x*100)+"%";
+  const cmp=(name,fa,fb,la,lb,advice)=>{const A=s.filter(fa),B=s.filter(fb);if(A.length<2||B.length<2)return;
+    const ra=rate(A),rb=rate(B);if(Math.abs(ra-rb)<0.1)return;
+    out.push(`<b>${name}:</b> ${ra>rb?la:lb} responde mais (${pc(Math.max(ra,rb))} contra ${pc(Math.min(ra,rb))}; ${A.length} vs ${B.length} mensagens). ${advice(ra>rb)}`)};
+  cmp("Tamanho",o=>o.texto.length<=300,o=>o.texto.length>300,"As mensagens curtas (até 300 caracteres)","As mensagens longas",
+    a=>a?"Corta para 2 ou 3 frases: quem és, porque contactas esta pessoa, uma pergunta.":"Podes dar mais contexto, mas mantém uma única ideia por mensagem.");
+  cmp("Pergunta",o=>o.texto.includes("?"),o=>!o.texto.includes("?"),"As mensagens com pergunta","As mensagens sem pergunta",
+    a=>a?"Termina sempre com uma pergunta simples e fácil de responder.":"Verifica se as tuas perguntas são demasiado abertas ou pesadas.");
+  const pers=o=>{const l=L(o.leadId),t=o.texto.toLowerCase();return (l.empresa&&t.includes(l.empresa.toLowerCase()))||/vi que|reparei|o teu post|o teu artigo|parabéns|o vosso|a vossa/.test(t)};
+  cmp("Personalização",pers,o=>!pers(o),"As mensagens personalizadas","As genéricas",
+    a=>a?"Abre com um detalhe real da pessoa ou da empresa (um post, um projeto, uma notícia).":"A personalização atual pode estar a soar a modelo. Torna-a mais específica.");
+  const pitch=o=>/proposta|orçamento|serviços|agência|oferec|desconto|reunião de \d+|marcar uma reunião/.test(o.texto.toLowerCase());
+  cmp("Venda direta",pitch,o=>!pitch(o),"As mensagens com pitch logo no início","As que não vendem logo",
+    a=>a?"A abordagem direta está a funcionar neste nicho. Mantém-na.":"Não vendas na primeira mensagem. Pede só uma conversa ou uma opinião.");
+  const avg=Math.round(s.reduce((n,o)=>n+o.texto.length,0)/s.length);
+  if(avg>450)out.push(`<b>Comprimento médio:</b> ${avg} caracteres é muito para LinkedIn. Aponta para 200 a 300.`);
+  const fu=s.filter(o=>o.tipo==="Follow-up");
+  if(!fu.length)out.push("<b>Follow-up:</b> ainda não registaste nenhum. A maioria das respostas chega depois do segundo contacto.");
+  else if(rate(fu)>rate(s.filter(o=>o.tipo!=="Follow-up")))out.push(`<b>Follow-up:</b> os follow-ups respondem ${pc(rate(fu))}. Faz um a cada lead sem resposta, 5 a 7 dias depois.`);
+  if(!out.length)out.push("Ainda não há diferenças claras entre as variantes. Continua a registar e testa uma coisa de cada vez (por exemplo, com e sem pergunta final).");
+  return out;
+}
+async function runAI(){
+  const s=S.outreach.filter(o=>sent(o)&&o.texto); const box=$("#ai");
+  if(s.length<3){box.textContent="Regista pelo menos 3 outreachs enviados com texto.";return}
+  const sample=await claude.use("sample").catch(()=>null);
+  if(!sample){box.textContent="Esta função só está disponível na página publicada, com sessão iniciada.";return}
+  const data=s.slice(-40).map(o=>`[${o.tipo}] [${o.estado}] [lead: ${L(o.leadId).cargo||""} em ${L(o.leadId).empresa||""}]\n${o.texto.slice(0,600)}`).join("\n---\n");
+  box.textContent="A analisar…";
+  try{const r=await sample(`És um especialista em cold outreach no LinkedIn para serviços B2B em Portugal. Estas são as mensagens enviadas e o resultado de cada uma (Respondido e Reunião marcada = sucesso). Em português europeu, diz: 1) o que as mensagens com resposta têm em comum, 2) os 3 maiores problemas das sem resposta, 3) uma versão reescrita de uma mensagem fraca. Sê concreto e curto.\n\n${data}`,{cache:false});
+    box.textContent=r.text}catch(e){box.textContent="Não foi possível analisar ("+(e&&e.code||"erro")+")."}
+}
+
+function renderReport(){
+  const o=S.outreach,env=o.filter(sent),rp=env.filter(replied),m=o.filter(x=>x.estado==="Reunião marcada");
+  $("#kpis").innerHTML=[["Leads",S.leads.length],["Enviados",env.length],["Respostas",rp.length],["Taxa de resposta",env.length?Math.round(rp.length/env.length*100)+"%":"—"],["Reuniões",m.length]].map(k=>`<div><span class="mut">${k[0]}</span><b>${k[1]}</b></div>`).join("");
+  $("#an").innerHTML=analysis().map(x=>`<li>${x}</li>`).join("");
+  charts.forEach(c=>c.destroy());charts=[];
+  if(typeof Chart==="undefined")return;
+  const cs=getComputedStyle(document.documentElement),ink=cs.getPropertyValue("--mut").trim(),grid=cs.getPropertyValue("--line").trim(),acc=cs.getPropertyValue("--acc").trim();
+  Chart.defaults.color=ink;Chart.defaults.font.family="Manrope,system-ui,sans-serif";
+  const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+  const sc={y:{beginAtZero:true,grid:{color:grid},ticks:{precision:0}},x:{grid:{display:false}}};
+  const title=t=>({display:true,text:t,color:cs.getPropertyValue("--ink").trim(),font:{size:14,weight:"700"}});
+  const cols=["#8795a3",acc,"#2f8a57","#d98e1f","#c2483a"];
+  charts.push(new Chart($("#c1"),{type:"doughnut",data:{labels:ESTADOS,datasets:[{data:ESTADOS.map(e=>o.filter(x=>x.estado===e).length),backgroundColor:cols,borderWidth:0}]},options:{...base,plugins:{legend:{display:true,position:"bottom"},title:title("Outreachs por estado")}}}));
+  const rt=TIPOS.map(t=>{const a=env.filter(x=>x.tipo===t);return a.length?Math.round(a.filter(replied).length/a.length*100):0});
+  charts.push(new Chart($("#c2"),{type:"bar",data:{labels:TIPOS.map(t=>t.replace("Mensagem de ","Msg. ")),datasets:[{data:rt,backgroundColor:acc}]},options:{...base,scales:{...sc,y:{...sc.y,max:100,ticks:{callback:v=>v+"%"}}},plugins:{legend:{display:false},title:title("Taxa de resposta por tipo")}}}));
+  const wk=d=>{const x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));return x.toISOString().slice(5,10)};
+  const weeks=[...new Set(env.map(x=>wk(x.data)))].sort().slice(-8);
+  charts.push(new Chart($("#c3"),{type:"line",data:{labels:weeks,datasets:[{label:"Enviados",data:weeks.map(w=>env.filter(x=>wk(x.data)===w).length),borderColor:acc,backgroundColor:acc,tension:.3},{label:"Respostas",data:weeks.map(w=>rp.filter(x=>wk(x.data)===w).length),borderColor:"#2f8a57",backgroundColor:"#2f8a57",tension:.3}]},options:{...base,scales:sc,plugins:{legend:{display:true,position:"bottom"},title:title("Atividade por semana (início da semana)")}}}));
+  charts.push(new Chart($("#c4"),{type:"bar",data:{labels:FASES,datasets:[{data:FASES.map(f=>S.leads.filter(l=>l.fase===f).length),backgroundColor:acc}]},options:{...base,indexAxis:"y",scales:{x:{beginAtZero:true,grid:{color:grid},ticks:{precision:0}},y:{grid:{display:false}}},plugins:{legend:{display:false},title:title("Leads por fase do funil")}}}));
+}
+const addDays=(d,n)=>{const x=new Date(d+"T12:00:00");x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)};
+const diff=(a,b)=>Math.round((new Date(a+"T12:00:00")-new Date(b+"T12:00:00"))/864e5);
+const mon=d=>{const x=new Date(d+"T12:00:00");x.setDate(x.getDate()-((x.getDay()+6)%7));return x.toISOString().slice(0,10)};
+const fillT=(t,l)=>t.replace(/\{nome\}/gi,(l.nome||"").split(" ")[0]).replace(/\{empresa\}/gi,l.empresa||"");
+const act=()=>S.outreach.filter(o=>o.estado==="Enviado"&&!o.fuDone);
+const age=o=>diff(today(),o.sentDate||o.data);
+const wkCount=k=>{const m=addDays(mon(today()),-7*k);return S.outreach.filter(o=>sent(o)&&o.tipo!=="Follow-up"&&mon(o.sentDate||o.data)===m).length};
+function go(x){tab=x;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t===x));document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===x));renderAll();scrollTo(0,0)}
+function openTpl(id){
+  tplId=id;const x=id?S.templates.find(t=>t.id===id):{};
+  $("#t_nome").value=x.nome||"";$("#t_txt").value=x.texto||"";$("#t_tipo").innerHTML=opts(TIPOS,x.tipo||TIPOS[0]);
+  $("#t_del").style.display=id?"":"none";$("#dt").showModal();
+}
+function renderTpls(){
+  $("#tpls").innerHTML=S.templates.length?S.templates.map(x=>`<div class="card"><div class="row"><b class="sp">${esc(x.nome)}</b><span class="chip">${esc(x.tipo)}</span></div><div class="mut" style="margin:6px 0;font-size:14px">${esc(x.texto.slice(0,180))}${x.texto.length>180?"…":""}</div><div class="stbtn"><button data-act="usetpl" data-id="${x.id}">Usar em várias leads</button><button data-act="filltpl" data-id="${x.id}">Usar no formulário</button><button data-act="edittpl" data-id="${x.id}">Editar</button></div></div>`).join(""):`<div class="empty" style="grid-column:1/-1">Ainda não tens exemplos. Carrega em "+ Exemplo" para guardar uma mensagem reutilizável.</div>`;
+}
+function alerts(){
+  const a=[],t=today(),ac=act(),q=S.cfg.quota||25,n=wkCount(0);
+  const late=ac.filter(o=>o.followup&&o.followup<=t).length;
+  if(late)a.push({c:"bad",t:"follow",m:`${late} follow-up${late>1?"s":""} para fazer hoje ou em atraso`});
+  const nd=ac.filter(o=>!o.followup&&age(o)>=5).length;
+  if(nd)a.push({c:"warn",t:"follow",m:`${nd} lead${nd>1?"s":""} sem resposta há 5+ dias e sem data de follow-up`});
+  const pe=S.outreach.filter(o=>o.estado==="Por enviar").length;
+  if(pe)a.push({c:"warn",t:"outreach",m:`${pe} outreach${pe>1?"s":""} por enviar`});
+  const dow=(new Date().getDay()+6)%7,pace=Math.round(q*Math.min(dow+1,5)/5);
+  if(n>=q)a.push({c:"ok",t:"ritmo",m:`Quota da semana cumprida (${n}/${q})`});
+  else if(n<pace)a.push({c:"warn",t:"ritmo",m:`Estás ${pace-n} contactos atrás do ritmo (${n}/${q}, devias ter ${pace} hoje)`});
+  else a.push({c:"ok",t:"ritmo",m:`${n}/${q} esta semana, dentro do ritmo`});
+  const nv=S.leads.filter(l=>l.fase==="Nova").length;
+  if(nv&&n<q)a.push({c:"warn",t:"leads",m:`${nv} lead${nv>1?"s":""} nova${nv>1?"s":""} por contactar`});
+  const ss=S.outreach.filter(sent).map(o=>o.sentDate||o.data).sort();
+  if(ss.length&&n<q){const g=diff(t,ss[ss.length-1]);if(g>=3)a.push({c:"warn",t:"outreach",m:`Há ${g} dias que não envias nenhum outreach`})}
+  return a;
+}
+function renderBanner(){
+  const al=alerts(),w=al.filter(x=>x.c!=="ok");
+  $("#banner").innerHTML=w.slice(0,4).map(x=>`<button class="${x.c}" data-t="${x.t}">${esc(x.m)}</button>`).join("");
+  const late=act().filter(o=>o.followup&&o.followup<=today()).length;
+  const bd=(t,k)=>{const b=document.querySelector(`nav [data-t="${t}"]`);const o=b.querySelector(".bdg");if(o)o.remove();if(k)b.insertAdjacentHTML("beforeend",`<span class="bdg">${k}</span>`)};
+  bd("follow",late);bd("ritmo",w.length);
+}
+function renderFollow(){
+  const ac=act().sort((a,b)=>(a.followup||"9").localeCompare(b.followup||"9")),t=today();
+  const late=ac.filter(o=>o.followup&&o.followup<=t).length;
+  $("#fukpi").innerHTML=[["Aguardam resposta",ac.length],["Follow-up hoje ou em atraso",late],["Sem resposta há 5+ dias",ac.filter(o=>age(o)>=5).length]].map(k=>`<div><span class="mut">${k[0]}</span><b>${k[1]}</b></div>`).join("");
+  $("#fulist").innerHTML=ac.length?ac.map(o=>{const ag=age(o),due=o.followup&&o.followup<=t;
+    return outCard(o)+`<div class="row" style="margin-top:6px"><span class="${ag>=5?"late":"mut"}">Enviado há ${ag} dia${ag===1?"":"s"}</span><span class="sp"></span><label style="margin:0">Follow-up em</label><input type="date" data-fu="${o.id}" value="${esc(o.followup||"")}" style="width:auto"></div>
+    <div class="stbtn"><button data-act="fu_new" data-id="${o.id}" class="${due?"on":""}">Preparar follow-up</button><button data-act="est" data-id="${o.id}" data-v="Respondido">Respondeu</button><button data-act="est" data-id="${o.id}" data-v="Sem resposta">Sem resposta</button></div></div>`}).join(""):`<div class="empty">Nenhuma lead à espera de resposta. Quando marcares um outreach como enviado, aparece aqui com data de follow-up.</div>`;
+}
+function renderRitmo(){
+  const q=S.cfg.quota||25,n=wkCount(0),pct=Math.min(100,Math.round(n/q*100));
+  const dow=(new Date().getDay()+6)%7,pace=Math.round(q*Math.min(dow+1,5)/5);
+  let st=0;for(let k=1;k<52&&wkCount(k)>=q;k++)st++;if(n>=q)st++;
+  if(document.activeElement!==$("#quota"))$("#quota").value=q;
+  $("#rprog").innerHTML=`<div class="row"><b style="font-size:22px">${n} / ${q}</b><span class="mut">contactos novos esta semana</span></div><div class="prog" style="margin:8px 0"><i style="width:${pct}%"></i></div><div class="mut">${n>=q?"Quota cumprida.":`Faltam ${q-n}. Ritmo ideal até hoje: ${pace}.`} Sequência: ${st} semana${st===1?"":"s"} seguida${st===1?"":"s"} a cumprir.</div>`;
+  $("#alist").innerHTML=alerts().map(x=>`<div class="card al ${x.c}" data-t="${x.t}">${esc(x.m)}</div>`).join("");
+  if(tab==="ritmo"&&typeof Chart!=="undefined"){
+    if(rc)rc.destroy();
+    const cs=getComputedStyle(document.documentElement),acc=cs.getPropertyValue("--acc").trim(),grid=cs.getPropertyValue("--line").trim();
+    Chart.defaults.color=cs.getPropertyValue("--mut").trim();Chart.defaults.font.family="Manrope,system-ui,sans-serif";
+    const ks=[7,6,5,4,3,2,1,0];
+    rc=new Chart($("#c5"),{data:{labels:ks.map(k=>addDays(mon(today()),-7*k).slice(5)),datasets:[{type:"bar",label:"Contactos novos",data:ks.map(k=>wkCount(k)),backgroundColor:acc},{type:"line",label:"Quota",data:ks.map(()=>q),borderColor:"#d98e1f",borderDash:[6,4],pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,grid:{color:grid},ticks:{precision:0}},x:{grid:{display:false}}},plugins:{legend:{display:true,position:"bottom"},title:{display:true,text:"Contactos novos por semana vs quota (início da semana)"}}}});
+  }
+}
+function renderAll(){
+  const fv=$("#ff").value,ev=$("#es_f").value;
+  $("#ff").innerHTML=opts(["Todas as fases",...FASES],fv||"Todas as fases");
+  $("#es_f").innerHTML=opts(["Todos os estados",...ESTADOS],ev||"Todos os estados");
+  leadOpts();renderLeads();renderOutreach();renderTpls();renderEstado();renderFollow();renderRitmo();renderBanner();if(tab==="report")renderReport();
+}
+$("#o_tipo").innerHTML=opts(TIPOS);$("#o_data").value=today();renderAll();
+</script>
+</body>
+</html>
