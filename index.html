@@ -70,15 +70,15 @@ pre{white-space:pre-wrap;font:inherit;margin:0}
 </head>
 <body>
 <header><div class="wrap"><h1>Outreach LinkedIn</h1>
-<nav id="nav"><button data-t="leads" class="on">Leads</button><button data-t="outreach">Outreach</button><button data-t="estado">Estado</button><button data-t="follow">Follow-ups</button><button data-t="ritmo">Ritmo</button><button data-t="report">Report</button></nav></div></header>
+<nav id="nav"><button data-t="leads" class="on">Leads</button><button data-t="outreach">Outreach</button><button data-t="estado">Estado</button><button data-t="follow">Follow-ups</button><button data-t="ritmo">Ritmo</button><button data-t="report">Report</button><button data-t="defs">Definições</button></nav></div></header>
 <main class="wrap">
 <div class="bn" id="banner"></div>
-
+ 
 <section id="leads" class="on">
 <div class="bar"><h2 style="margin:0">Leads</h2><input id="q" placeholder="Pesquisar…"><select id="ff"></select><span class="sp"></span><button class="btn plus" data-act="newlead" title="Adicionar lead">+</button></div>
 <div id="leadlist" class="grid"></div>
 </section>
-
+ 
 <section id="outreach">
 <div class="bar"><h2 style="margin:0">Exemplos de outreach</h2><span class="sp"></span><button class="btn" data-act="newtpl">+ Exemplo</button></div>
 <div id="tpls" class="grid"></div>
@@ -97,18 +97,18 @@ pre{white-space:pre-wrap;font:inherit;margin:0}
 <h2 style="margin-top:26px">Histórico</h2>
 <div id="outlog"></div>
 </section>
-
+ 
 <section id="estado">
 <div class="bar"><h2 style="margin:0">Estado</h2><select id="es_f"></select></div>
 <div id="eslist"></div>
 </section>
-
+ 
 <section id="follow">
 <h2>Follow-ups</h2>
 <div class="kpis" id="fukpi"></div>
 <div id="fulist"></div>
 </section>
-
+ 
 <section id="ritmo">
 <h2>Ritmo semanal</h2>
 <div class="card"><div class="row"><label style="margin:0">Quota semanal de contactos novos</label><input type="number" id="quota" min="1" style="width:90px"><span class="mut">Os follow-ups não contam para a quota.</span></div></div>
@@ -117,7 +117,7 @@ pre{white-space:pre-wrap;font:inherit;margin:0}
 <h2 style="margin-top:22px">Alertas e lembretes</h2>
 <div id="alist"></div>
 </section>
-
+ 
 <section id="report">
 <h2>Report geral</h2>
 <div class="kpis" id="kpis"></div>
@@ -128,8 +128,13 @@ pre{white-space:pre-wrap;font:inherit;margin:0}
 <div class="card an"><ul id="an" style="margin:0;padding-left:18px"></ul></div>
 <div class="card"><div class="row"><span class="sp mut">Análise mais profunda do texto, feita pelo Claude com os teus dados.</span><button class="btn ghost" id="aibtn" data-act="ai">Analisar com Claude</button></div><pre id="ai" style="margin-top:10px"></pre></div>
 </section>
+<section id="defs">
+<h2>Definições</h2>
+<div class="card"><b>Dados guardados</b><div class="mut" id="defcount" style="margin-top:4px"></div></div>
+<div class="card"><b>Reiniciar dados</b><p class="mut" style="margin:4px 0 10px">Apaga todas as leads, outreachs, exemplos e a quota semanal. Não pode ser desfeito.</p><button class="btn del" data-act="reset">Reiniciar dados</button></div>
+</section>
 </main>
-
+ 
 <dialog id="dl">
 <div class="f2">
 <div><label>Nome</label><input id="l_nome"></div><div><label>Empresa</label><input id="l_emp"></div>
@@ -139,21 +144,21 @@ pre{white-space:pre-wrap;font:inherit;margin:0}
 <div style="margin:10px 0"><label>Notas (contexto, dores, o que já falaram)</label><textarea id="l_notas"></textarea></div>
 <div class="row"><button class="btn" data-act="savelead">Guardar</button><button class="btn ghost" data-act="closedl">Cancelar</button><span class="sp"></span><button class="btn del" id="l_del" data-act="dellead">Apagar</button></div>
 </dialog>
-
+ 
 <dialog id="dt">
 <div><label>Nome do exemplo</label><input id="t_nome" placeholder="ex.: Apresentação inicial"></div>
 <div style="margin:10px 0"><label>Tipo</label><select id="t_tipo"></select></div>
 <div><label>Texto (usa {nome} e {empresa} para personalizar)</label><textarea id="t_txt"></textarea></div>
 <div class="row" style="margin-top:12px"><button class="btn" data-act="savetpl">Guardar</button><button class="btn ghost" data-act="closetpl">Cancelar</button><span class="sp"></span><button class="btn del" id="t_del" data-act="deltpl">Apagar</button></div>
 </dialog>
-
+ 
 <dialog id="du">
 <h2 id="du_t" style="margin-bottom:6px"></h2>
 <div class="mut" style="margin-bottom:8px">Escolhe as leads. Cada uma recebe um outreach "Por enviar" com o texto personalizado.</div>
 <div class="chk" id="du_list"></div>
 <div class="row" style="margin-top:12px"><button class="btn" data-act="mkout">Criar outreachs</button><button class="btn ghost" data-act="selall">Selecionar todas</button><button class="btn ghost" data-act="closeuse">Cancelar</button></div>
 </dialog>
-
+ 
 <script>
 const ESTADOS=["Por enviar","Enviado","Respondido","Reunião marcada","Sem resposta"];
 const FASES=["Nova","Contactada","Em conversa","Reunião","Cliente","Perdida"];
@@ -166,7 +171,7 @@ try{const t=localStorage.getItem("lv_crm");if(t)S=norm(JSON.parse(t))}catch(e){}
 const L=id=>S.leads.find(l=>l.id===id)||{nome:"(lead removida)",empresa:""};
 const opts=(a,sel)=>a.map(x=>`<option${x===sel?" selected":""}>${esc(x)}</option>`).join("");
 const sent=o=>o.estado!=="Por enviar", replied=o=>o.estado==="Respondido"||o.estado==="Reunião marcada";
-
+ 
 function save(){
   try{localStorage.setItem("lv_crm",JSON.stringify(S))}catch(e){}
   if(ref){clearTimeout(timer);timer=setTimeout(()=>{timer=null;ref.set(S).catch(()=>{})},400)}
@@ -183,7 +188,7 @@ function save(){
     },()=>{});
   }catch(e){}
 })();
-
+ 
 document.addEventListener("click",e=>{
   const t=e.target.closest("[data-t],[data-act]"); if(!t)return;
   if(t.dataset.t){go(t.dataset.t);return}
@@ -246,6 +251,11 @@ document.addEventListener("click",e=>{
     const o=S.outreach.find(x=>x.id===id);pfu=id;go("outreach");
     $("#o_lead").value=o.leadId;$("#o_tipo").value="Follow-up";$("#o_est").value="Por enviar";$("#o_msg").textContent="Escreve o follow-up e guarda.";$("#o_txt").focus();
   }
+  else if(a==="reset"){
+    if(confirm("Apagar TODAS as leads, outreachs, exemplos e a quota? Esta ação não pode ser desfeita.")&&confirm("Tens a certeza? Vais começar do zero.")){
+      S=norm({});save();renderAll();go("leads");
+    }
+  }
   else if(a==="ai")runAI();
 });
 document.addEventListener("change",e=>{
@@ -255,14 +265,14 @@ document.addEventListener("change",e=>{
   else if(t.id==="quota"){S.cfg.quota=Math.max(1,Math.round(+t.value)||25);save();renderAll()}
 });
 ["q","ff","es_f"].forEach(i=>$("#"+i).addEventListener("input",renderAll));
-
+ 
 function openLead(id){
   editId=id;const l=id?L(id):{};
   $("#l_nome").value=l.nome||"";$("#l_emp").value=l.empresa||"";$("#l_cargo").value=l.cargo||"";$("#l_li").value=l.linkedin||"";$("#l_ct").value=l.contacto||"";
   $("#l_nicho").value=l.nicho||"";$("#l_orig").value=l.origem||"";$("#l_notas").value=l.notas||"";$("#l_fase").innerHTML=opts(FASES,l.fase||"Nova");
   $("#l_del").style.display=id?"":"none";$("#dl").showModal();
 }
-
+ 
 function renderLeads(){
   const q=$("#q").value.toLowerCase(),f=$("#ff").value;
   const list=S.leads.filter(l=>(f==="Todas as fases"||l.fase===f)&&(!q||[l.nome,l.empresa,l.cargo,l.nicho,l.notas].join(" ").toLowerCase().includes(q)));
@@ -294,7 +304,7 @@ function renderEstado(){
     return outCard(o)+`<div class="row" style="margin-top:6px"><label style="margin:0">Fase da lead</label><select data-fase="${o.leadId}" style="width:auto">${opts(FASES,ld.fase)}</select><span class="mut">estado desde ${esc(o.estadoData||o.data)}</span></div>
     <div class="stbtn">${ESTADOS.map(s=>`<button class="${s===o.estado?"on":""}" data-act="est" data-id="${o.id}" data-v="${s}">${s}</button>`).join("")}</div></div>`}).join(""):`<div class="empty">Sem outreachs neste estado.</div>`;
 }
-
+ 
 function analysis(){
   const s=S.outreach.filter(o=>sent(o)&&o.texto), out=[];
   if(s.length<5)return ["Regista pelo menos 5 outreachs enviados, com o texto da mensagem, para a análise ser útil. Neste momento tens "+s.length+"."];
@@ -330,7 +340,7 @@ async function runAI(){
   try{const r=await sample(`És um especialista em cold outreach no LinkedIn para serviços B2B em Portugal. Estas são as mensagens enviadas e o resultado de cada uma (Respondido e Reunião marcada = sucesso). Em português europeu, diz: 1) o que as mensagens com resposta têm em comum, 2) os 3 maiores problemas das sem resposta, 3) uma versão reescrita de uma mensagem fraca. Sê concreto e curto.\n\n${data}`,{cache:false});
     box.textContent=r.text}catch(e){box.textContent="Não foi possível analisar ("+(e&&e.code||"erro")+")."}
 }
-
+ 
 function renderReport(){
   const o=S.outreach,env=o.filter(sent),rp=env.filter(replied),m=o.filter(x=>x.estado==="Reunião marcada");
   $("#kpis").innerHTML=[["Leads",S.leads.length],["Enviados",env.length],["Respostas",rp.length],["Taxa de resposta",env.length?Math.round(rp.length/env.length*100)+"%":"—"],["Reuniões",m.length]].map(k=>`<div><span class="mut">${k[0]}</span><b>${k[1]}</b></div>`).join("");
@@ -419,9 +429,10 @@ function renderAll(){
   const fv=$("#ff").value,ev=$("#es_f").value;
   $("#ff").innerHTML=opts(["Todas as fases",...FASES],fv||"Todas as fases");
   $("#es_f").innerHTML=opts(["Todos os estados",...ESTADOS],ev||"Todos os estados");
-  leadOpts();renderLeads();renderOutreach();renderTpls();renderEstado();renderFollow();renderRitmo();renderBanner();if(tab==="report")renderReport();
+  leadOpts();renderLeads();renderOutreach();renderTpls();renderEstado();renderFollow();renderRitmo();renderBanner();$("#defcount").textContent=`${S.leads.length} leads, ${S.outreach.length} outreachs, ${S.templates.length} exemplos.`;if(tab==="report")renderReport();
 }
 $("#o_tipo").innerHTML=opts(TIPOS);$("#o_data").value=today();renderAll();
 </script>
 </body>
 </html>
+ 
